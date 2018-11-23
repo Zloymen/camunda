@@ -1,0 +1,25 @@
+spring.application.name: simpleApplication
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sonar
+    username: sonar
+    password: sonar
+    driver-class-name: org.postgresql.Driver
+camunda:
+  bpm:
+    application:
+      delete-upon-undeploy: false
+      scan-for-process-definitions: false
+      deploy-changed-only: true
+      resume-previous-versions: true
+      resume-previous-by: a value
+    job-execution:
+      enabled: true
+    metrics:
+      enabled: false
+      db-reporter-activate: false
+
+
+#camunda.bpm.auto-deployment-enabled: false
+
+  /work/project/camunda-bpm-examples/spring-boot-starter/example-simple
