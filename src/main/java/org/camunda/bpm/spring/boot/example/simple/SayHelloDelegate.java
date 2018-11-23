@@ -13,6 +13,8 @@ public class SayHelloDelegate implements JavaDelegate {
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {
+
+
     logger.info("executed sayHelloDelegate: {}", execution);
   }
 

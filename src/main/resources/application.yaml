@@ -22,4 +22,3 @@ camunda:
 
 #camunda.bpm.auto-deployment-enabled: false
 
-  /work/project/camunda-bpm-examples/spring-boot-starter/example-simple

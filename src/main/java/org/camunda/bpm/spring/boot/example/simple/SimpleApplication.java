@@ -31,7 +31,12 @@ public class SimpleApplication implements CommandLineRunner {
 
   boolean processApplicationStopped;
 
-  public static void main(final String... args) throws Exception {
+//  @Bean("sayHelloDelegate")
+//  SayHelloDelegate create(){
+//    return new SayHelloDelegate();
+//  }
+
+  public static void main(final String... args) {
     SpringApplication.run(SimpleApplication.class, args);
   }
 
