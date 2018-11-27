@@ -1,9 +1,9 @@
 spring.application.name: simpleApplication
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/sonar
-    username: sonar
-    password: sonar
+    url: jdbc:postgresql://localhost:5432/camunda
+    username: camunda
+    password: camunda
     driver-class-name: org.postgresql.Driver
 camunda:
   bpm:
