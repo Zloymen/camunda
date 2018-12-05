@@ -8,6 +8,7 @@ import org.camunda.bpm.engine.delegate.ExecutionListener;
 public class StartProcessListener implements ExecutionListener {
     @Override
     public void notify(DelegateExecution execution) throws Exception {
+
         log.info("begin start process {}", execution.getProcessInstanceId());
     }
 }
