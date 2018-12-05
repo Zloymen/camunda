@@ -15,11 +15,15 @@ cache:
 
 build:
   stage: build
+  tags:
+    - mvn
   script:
     - mvn $MAVEN_CLI_OPTS compile
 
 test:
   stage: test
+  tags:
+    - mvn
   script:
     - mvn $MAVEN_CLI_OPTS test
 
