@@ -2,3 +2,6 @@
 
 original: https://github.com/camunda/camunda-bpm-examples  
 
+
+test docker-runner
+
