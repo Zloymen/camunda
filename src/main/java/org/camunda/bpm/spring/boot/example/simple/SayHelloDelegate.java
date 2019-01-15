@@ -11,7 +11,11 @@ public class SayHelloDelegate implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        log.info("executed sayHelloDelegate: {}", execution);
+
+        boolean manualApprove = (Boolean) execution.getVariable("manualApprove");
+        boolean autoApprove = (Boolean) execution.getVariable("autoApprove");
+        log.info("executed sayHelloDelegate: {}, manualApprove: {} autoApprove:{}",
+                execution, manualApprove, autoApprove);
     }
 
 }

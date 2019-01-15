@@ -2,8 +2,8 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1cs5btz" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.1">
   <bpmn:process id="Check_Borrow" isExecutable="true">
     <bpmn:extensionElements>
-      <camunda:executionListener class="org.camunda.bpm.spring.boot.example.simple.listener.StartProcessListener" event="start" />
-      <camunda:executionListener class="org.camunda.bpm.spring.boot.example.simple.listener.EndProcessListener" event="end" />
+      <camunda:executionListener class="ru.platiza.bpm.spring.module.listener.StartProcessListener" event="start" />
+      <camunda:executionListener class="ru.platiza.bpm.spring.module.listener.EndProcessListener" event="end" />
     </bpmn:extensionElements>
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_081sa6j</bpmn:outgoing>
@@ -59,7 +59,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_0n72mzm" sourceRef="Task_1tfwz2e" targetRef="EndEvent_0dd5e3n" />
     <bpmn:sequenceFlow id="SequenceFlow_081sa6j" sourceRef="StartEvent_1" targetRef="Task_0xnmi7k" />
     <bpmn:sequenceFlow id="SequenceFlow_15rvxas" sourceRef="Task_0xnmi7k" targetRef="Task_manual_check" />
-    <bpmn:serviceTask id="Task_0xnmi7k" name="Подготовка сведений о заявке" camunda:class="org.camunda.bpm.spring.boot.example.simple.delegate.TrainingInfoDelegate">
+    <bpmn:serviceTask id="Task_0xnmi7k" name="Подготовка сведений о заявке" camunda:class="ru.platiza.bpm.spring.module.delegate.TrainingInfoDelegate">
       <bpmn:incoming>SequenceFlow_081sa6j</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_15rvxas</bpmn:outgoing>
     </bpmn:serviceTask>

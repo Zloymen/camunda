@@ -7,17 +7,30 @@
     <bpmn2:userTask id="UserTask_1" name="do something">
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_1luf0p0</bpmn2:outgoing>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_1" sourceRef="StartEvent_1" targetRef="UserTask_1" />
     <bpmn2:serviceTask id="ServiceTask_1" name="say hello" camunda:async="true" camunda:delegateExpression="${sayHelloDelegate}">
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_1tc9gjm</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_2" sourceRef="UserTask_1" targetRef="ServiceTask_1" />
-    <bpmn2:endEvent id="EndEvent_1">
-      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+    <bpmn2:sequenceFlow id="SequenceFlow_1tc9gjm" sourceRef="ServiceTask_1" targetRef="EndEvent_0t1aj8q" />
+    <bpmn2:endEvent id="EndEvent_0t1aj8q">
+      <bpmn2:incoming>SequenceFlow_1tc9gjm</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_025q9mq</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="ServiceTask_1" targetRef="EndEvent_1" />
+    <bpmn2:sequenceFlow id="SequenceFlow_1luf0p0" sourceRef="UserTask_1" targetRef="Task_1kr44wt" />
+    <bpmn2:sequenceFlow id="SequenceFlow_155zj39" sourceRef="Task_1kr44wt" targetRef="Task_1t0csi1" />
+    <bpmn2:sequenceFlow id="SequenceFlow_025q9mq" sourceRef="Task_1t0csi1" targetRef="EndEvent_0t1aj8q" />
+    <bpmn2:serviceTask id="Task_1kr44wt" name="run1" camunda:expression="${DelegateService.execute1(execution)}">
+      <bpmn2:incoming>SequenceFlow_1luf0p0</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_155zj39</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:serviceTask id="Task_1t0csi1" name="run2" camunda:expression="${DelegateService.execute2(execution)}">
+      <bpmn2:incoming>SequenceFlow_155zj39</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_025q9mq</bpmn2:outgoing>
+    </bpmn2:serviceTask>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sample">
@@ -38,13 +51,34 @@
         <di:waypoint x="251" y="115" />
         <di:waypoint x="301" y="115" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_3" bpmnElement="EndEvent_1">
-        <dc:Bounds x="451" y="97" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="_BPMNShape_ServiceTask_2" targetElement="_BPMNShape_EndEvent_3">
+      <bpmndi:BPMNEdge id="SequenceFlow_1tc9gjm_di" bpmnElement="SequenceFlow_1tc9gjm">
         <di:waypoint x="401" y="115" />
-        <di:waypoint x="451" y="115" />
+        <di:waypoint x="601" y="115" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0t1aj8q_di" bpmnElement="EndEvent_0t1aj8q">
+        <dc:Bounds x="601" y="97" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1luf0p0_di" bpmnElement="SequenceFlow_1luf0p0">
+        <di:waypoint x="251" y="115" />
+        <di:waypoint x="276" y="115" />
+        <di:waypoint x="276" y="225" />
+        <di:waypoint x="301" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_155zj39_di" bpmnElement="SequenceFlow_155zj39">
+        <di:waypoint x="401" y="225" />
+        <di:waypoint x="451" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_025q9mq_di" bpmnElement="SequenceFlow_025q9mq">
+        <di:waypoint x="551" y="225" />
+        <di:waypoint x="619" y="225" />
+        <di:waypoint x="619" y="133" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1or6f50_di" bpmnElement="Task_1kr44wt">
+        <dc:Bounds x="301" y="185" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0krr37s_di" bpmnElement="Task_1t0csi1">
+        <dc:Bounds x="451" y="185" width="100" height="80" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn2:definitions>
