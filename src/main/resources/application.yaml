@@ -18,6 +18,11 @@ camunda:
     metrics:
       enabled: false
       db-reporter-activate: false
+    admin-user:
+      id: root
+      password: root
+    default-serialization-format: application/json
+
 
 
 #camunda.bpm.auto-deployment-enabled: false

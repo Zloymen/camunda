@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1egxlpl" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.1">
+  <bpmn:process id="mainRunner1" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_0dm9gxy</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0dm9gxy" sourceRef="StartEvent_1" targetRef="Task_07s3m76" />
+    <bpmn:endEvent id="EndEvent_0o4msho">
+      <bpmn:incoming>SequenceFlow_1fomyav</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1fomyav" sourceRef="Task_07s3m76" targetRef="EndEvent_0o4msho" />
+    <bpmn:callActivity id="Task_07s3m76" name="Test Input param into sub process" calledElement="subRunner1">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="param1">
+            <camunda:list>
+              <camunda:value>x1</camunda:value>
+              <camunda:value>x2</camunda:value>
+              <camunda:value>x3</camunda:value>
+            </camunda:list>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="param2">
+            <camunda:map>
+              <camunda:entry key="x1">x1</camunda:entry>
+              <camunda:entry key="x2">x2</camunda:entry>
+              <camunda:entry key="x3">3</camunda:entry>
+            </camunda:map>
+          </camunda:inputParameter>
+        </camunda:inputOutput>
+        <camunda:in source="param1" target="subParam1" />
+        <camunda:in source="param2" target="subParam2" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0dm9gxy</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1fomyav</bpmn:outgoing>
+    </bpmn:callActivity>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="mainRunner1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0dm9gxy_di" bpmnElement="SequenceFlow_0dm9gxy">
+        <di:waypoint x="209" y="120" />
+        <di:waypoint x="259" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0o4msho_di" bpmnElement="EndEvent_0o4msho">
+        <dc:Bounds x="409" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1fomyav_di" bpmnElement="SequenceFlow_1fomyav">
+        <di:waypoint x="359" y="120" />
+        <di:waypoint x="409" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="CallActivity_0kj7tfi_di" bpmnElement="Task_07s3m76">
+        <dc:Bounds x="259" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

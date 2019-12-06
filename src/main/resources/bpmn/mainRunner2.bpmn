@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0vqyh6g" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.1">
+  <bpmn:process id="mainRunner2" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_16dn5kt</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_16dn5kt" sourceRef="StartEvent_1" targetRef="Task_064rxdd" />
+    <bpmn:endEvent id="EndEvent_03ctk0x">
+      <bpmn:incoming>SequenceFlow_1f2j1s7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1f2j1s7" sourceRef="Task_064rxdd" targetRef="EndEvent_03ctk0x" />
+    <bpmn:subProcess id="Task_064rxdd">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="keys">
+            <camunda:list>
+              <camunda:value>test1</camunda:value>
+              <camunda:value>test2</camunda:value>
+            </camunda:list>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="mapProcess">
+            <camunda:map>
+              <camunda:entry key="test1">subRunner1</camunda:entry>
+              <camunda:entry key="test2">subRunner1</camunda:entry>
+            </camunda:map>
+          </camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_16dn5kt</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1f2j1s7</bpmn:outgoing>
+      <bpmn:startEvent id="StartEvent_17fjsv7">
+        <bpmn:outgoing>SequenceFlow_1xndt1w</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="SequenceFlow_1xndt1w" sourceRef="StartEvent_17fjsv7" targetRef="Task_1vg4avp" />
+      <bpmn:endEvent id="EndEvent_1i8c8it">
+        <bpmn:incoming>SequenceFlow_1s2yxi3</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="SequenceFlow_1s2yxi3" sourceRef="Task_1vg4avp" targetRef="EndEvent_1i8c8it" />
+      <bpmn:callActivity id="Task_1vg4avp" name="test sub Runner" calledElement="${mapProcess.get(key)}">
+        <bpmn:extensionElements>
+          <camunda:in source="key" target="key" />
+        </bpmn:extensionElements>
+        <bpmn:incoming>SequenceFlow_1xndt1w</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_1s2yxi3</bpmn:outgoing>
+        <bpmn:multiInstanceLoopCharacteristics isSequential="true" camunda:collection="keys" camunda:elementVariable="key" />
+      </bpmn:callActivity>
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="mainRunner2">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="422" y="474" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_16dn5kt_di" bpmnElement="SequenceFlow_16dn5kt">
+        <di:waypoint x="458" y="492" />
+        <di:waypoint x="512" y="492" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_03ctk0x_di" bpmnElement="EndEvent_03ctk0x">
+        <dc:Bounds x="943" y="474" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1f2j1s7_di" bpmnElement="SequenceFlow_1f2j1s7">
+        <di:waypoint x="862" y="492" />
+        <di:waypoint x="943" y="492" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="SubProcess_1i9hhb9_di" bpmnElement="Task_064rxdd" isExpanded="true">
+        <dc:Bounds x="512" y="392" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_17fjsv7_di" bpmnElement="StartEvent_17fjsv7">
+        <dc:Bounds x="563" y="465" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1xndt1w_di" bpmnElement="SequenceFlow_1xndt1w">
+        <di:waypoint x="599" y="483" />
+        <di:waypoint x="649" y="483" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_1i8c8it_di" bpmnElement="EndEvent_1i8c8it">
+        <dc:Bounds x="799" y="465" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1s2yxi3_di" bpmnElement="SequenceFlow_1s2yxi3">
+        <di:waypoint x="749" y="483" />
+        <di:waypoint x="799" y="483" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="CallActivity_10x9b13_di" bpmnElement="Task_1vg4avp">
+        <dc:Bounds x="649" y="443" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
