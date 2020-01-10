@@ -2,11 +2,7 @@ package org.camunda.bpm.spring.boot.example.simple;
 
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.camunda.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.camunda.bpm.spring.boot.example.simple.delegate.ApproveDelegate;
-import org.camunda.bpm.spring.boot.example.simple.delegate.AutoСheckDelegate;
-import org.camunda.bpm.spring.boot.example.simple.delegate.RejectPushDelegate;
-import org.camunda.bpm.spring.boot.example.simple.delegate.RejectedDelegate;
+import org.camunda.bpm.spring.boot.example.simple.delegate.*;
 import org.camunda.bpm.spring.boot.starter.annotation.EnableProcessApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -43,6 +39,11 @@ public class SimpleApplication {
     @Bean("autoСheckDelegate")
     AutoСheckDelegate createAutoCheck() {
         return new AutoСheckDelegate();
+    }
+
+    @Bean("testErrorDelegate")
+    TestErrorDelegate createTestErrorDelegate(){
+        return new TestErrorDelegate();
     }
 
 

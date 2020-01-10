@@ -5,6 +5,8 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 @Component("DelegateService")
 @Slf4j
@@ -33,5 +35,12 @@ public class DelegateService {
         variables.keySet().forEach(key -> log.info("key: {}, value: {}", key, variables.get(key)));
 
 
+    }
+
+    public void testError(DelegateExecution execution){
+
+        Object oCheck = execution.getVariable("check");
+        boolean manualApprove = oCheck != null ? (Boolean) oCheck : false;
+        if (!manualApprove) execution.createIncident("customError", "error", "все пропало");
     }
 }

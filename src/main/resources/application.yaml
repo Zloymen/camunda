@@ -1,3 +1,4 @@
+
 spring.application.name: simpleApplication
 spring:
   datasource:
@@ -22,8 +23,8 @@ camunda:
       id: root
       password: root
     default-serialization-format: application/json
-
-
+    history-level: none
 
 #camunda.bpm.auto-deployment-enabled: false
-
+server:
+  port: 9080
