@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -38,6 +39,7 @@ public class ExampleController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public void runTest(){
+        //runtimeService.startProcessInstanceById()
         showcase.runTest();
     }
 
@@ -57,6 +59,17 @@ public class ExampleController {
     public void compliteTask(@PathVariable("taskId") String taskId, @RequestBody Map<String, Object> params){
         if(params.isEmpty()) taskService.complete(taskId);
             else taskService.complete(taskId, params);
+    }
+
+    @GetMapping("/process/in")
+    public String run(){
+        String uid = UUID.randomUUID().toString();
+        //ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Sample", uid, "Task_1kr44wt");
+
+        ProcessInstance processInstance = runtimeService.createProcessInstanceByKey("Sample").startBeforeActivity("Task_1kr44wt").execute();
+
+
+        return processInstance.getCaseInstanceId();
     }
 
 }

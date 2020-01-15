@@ -5,6 +5,8 @@ import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.spring.boot.starter.test.helper.AbstractProcessEngineRuleTest;
 import org.junit.Test;
 
+import java.util.UUID;
+
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.assertThat;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 import static org.camunda.bpm.extension.mockito.DelegateExpressions.autoMock;
@@ -20,6 +22,22 @@ public class SampleProcessTest extends AbstractProcessEngineRuleTest {
     autoMock("bpmn/sample.bpmn");
 
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("Sample");
+
+    assertThat(processInstance).isWaitingAt("UserTask_1");
+
+    complete(task());
+
+    assertThat(processInstance).isWaitingAt("ServiceTask_1");
+    execute(job());
+
+    assertThat(processInstance).isEnded();
+  }
+
+  @Test
+  public void start_with_task_and_finish_process() {
+    autoMock("bpmn/sample.bpmn");
+
+    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("Sample", UUID.randomUUID().toString(), "Task_1kr44wt");
 
     assertThat(processInstance).isWaitingAt("UserTask_1");
 

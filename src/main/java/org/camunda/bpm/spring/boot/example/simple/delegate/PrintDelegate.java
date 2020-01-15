@@ -11,8 +11,6 @@ public class PrintDelegate implements JavaDelegate {
         log.info("print");
         for(String key : execution.getVariables().keySet()){
             log.info("key:{} value:{}", key, execution.getVariables().get(key));
-
         }
-
     }
 }
