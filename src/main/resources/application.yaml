@@ -8,6 +8,7 @@ spring:
     password: sa
 camunda:
   bpm:
+
     application:
       delete-upon-undeploy: false
       scan-for-process-definitions: false
@@ -16,6 +17,8 @@ camunda:
       resume-previous-by: a value
     job-execution:
       enabled: true
+      core-pool-size: 10
+      max-pool-size: 100
     metrics:
       enabled: false
       db-reporter-activate: false
@@ -24,6 +27,8 @@ camunda:
       password: root
     default-serialization-format: application/json
     history-level: none
+
+
 
 #camunda.bpm.auto-deployment-enabled: false
 server:

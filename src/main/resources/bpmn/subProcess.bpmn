@@ -19,7 +19,7 @@
       <bpmn:extensionElements>
         <camunda:in source="ids" target="ids" />
         <camunda:out source="reverseIds" target="reverseIds" />
-        <camunda:failedJobRetryTimeCycle>1</camunda:failedJobRetryTimeCycle>
+        <camunda:failedJobRetryTimeCycle></camunda:failedJobRetryTimeCycle>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0pgyqhr</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_17xxhhm</bpmn:outgoing>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0obglxf" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.1">
+  <bpmn:process id="pBatchBillingV2" name="Пакетный расчет биллинга версия.2" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="billingDate" label="billing date" type="date" defaultValue="${dateTime().toLocalDate().toString(&#39;dd/MM/yyyy&#39;)}" />
+          <camunda:formField id="size" label="batch size" type="long" defaultValue="4" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_0myqo6g</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0myqo6g" sourceRef="StartEvent_1" targetRef="Task_1fm6dc8" />
+    <bpmn:sequenceFlow id="SequenceFlow_0j9k9me" sourceRef="Task_1fm6dc8" targetRef="Task_14smkhd" />
+    <bpmn:endEvent id="EndEvent_0l20utk">
+      <bpmn:incoming>SequenceFlow_0g3xvk6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0g3xvk6" sourceRef="Task_14smkhd" targetRef="EndEvent_0l20utk" />
+    <bpmn:serviceTask id="Task_1fm6dc8" name="Получить клиентов для расчета биллинга" camunda:class="org.camunda.bpm.spring.boot.example.simple.delegate.ClientGetterDelegate">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="billingDate">${billingDate}</camunda:inputParameter>
+          <camunda:inputParameter name="size">${size}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0myqo6g</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0j9k9me</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:subProcess id="Task_14smkhd" name="Запуск пакета для биллинга версии 2">
+      <bpmn:incoming>SequenceFlow_0j9k9me</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0g3xvk6</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics camunda:collection="packages" camunda:elementVariable="package" />
+      <bpmn:startEvent id="StartEvent_0zrrgj4">
+        <bpmn:outgoing>SequenceFlow_1p88pjf</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="SequenceFlow_1p88pjf" sourceRef="StartEvent_0zrrgj4" targetRef="Task_0lfdkze" />
+      <bpmn:endEvent id="EndEvent_161ir6g">
+        <bpmn:incoming>SequenceFlow_0shhpz8</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="SequenceFlow_0shhpz8" sourceRef="Task_0lfdkze" targetRef="EndEvent_161ir6g" />
+      <bpmn:serviceTask id="Task_0lfdkze" name="Старт пакета" camunda:class="org.camunda.bpm.spring.boot.example.simple.delegate.StartProcess">
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="variables">
+              <camunda:map>
+                <camunda:entry key="billingDate">${billingDate}</camunda:entry>
+                <camunda:entry key="clients">${package}</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="processName">pPackageBillingV2</camunda:inputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>SequenceFlow_1p88pjf</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_0shhpz8</bpmn:outgoing>
+      </bpmn:serviceTask>
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="pBatchBillingV2">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0myqo6g_di" bpmnElement="SequenceFlow_0myqo6g">
+        <di:waypoint x="209" y="120" />
+        <di:waypoint x="259" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0j9k9me_di" bpmnElement="SequenceFlow_0j9k9me">
+        <di:waypoint x="359" y="120" />
+        <di:waypoint x="405" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0l20utk_di" bpmnElement="EndEvent_0l20utk">
+        <dc:Bounds x="814" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0g3xvk6_di" bpmnElement="SequenceFlow_0g3xvk6">
+        <di:waypoint x="755" y="120" />
+        <di:waypoint x="814" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0meowjv_di" bpmnElement="Task_1fm6dc8">
+        <dc:Bounds x="259" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_1xo3xvd_di" bpmnElement="Task_14smkhd" isExpanded="true">
+        <dc:Bounds x="405" y="20" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0zrrgj4_di" bpmnElement="StartEvent_0zrrgj4">
+        <dc:Bounds x="448" y="96" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1p88pjf_di" bpmnElement="SequenceFlow_1p88pjf">
+        <di:waypoint x="484" y="114" />
+        <di:waypoint x="528" y="114" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_161ir6g_di" bpmnElement="EndEvent_161ir6g">
+        <dc:Bounds x="660" y="96" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0shhpz8_di" bpmnElement="SequenceFlow_0shhpz8">
+        <di:waypoint x="628" y="114" />
+        <di:waypoint x="660" y="114" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1wl2i7m_di" bpmnElement="Task_0lfdkze">
+        <dc:Bounds x="528" y="74" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

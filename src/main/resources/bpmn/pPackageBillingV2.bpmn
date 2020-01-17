@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0t2bae0" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.1">
+  <bpmn:process id="pPackageBillingV2" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" camunda:asyncBefore="true" camunda:exclusive="false">
+      <bpmn:outgoing>SequenceFlow_1dsef2e</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1dsef2e" sourceRef="StartEvent_1" targetRef="Task_14gv2zw" />
+    <bpmn:serviceTask id="Task_14gv2zw" name="Получить данные по клиентам" camunda:class="org.camunda.bpm.spring.boot.example.simple.delegate.GetterBillingDataForClient">
+      <bpmn:incoming>SequenceFlow_1dsef2e</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_10tjllg</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_10tjllg" sourceRef="Task_14gv2zw" targetRef="Task_0yqqng8" />
+    <bpmn:sequenceFlow id="SequenceFlow_0tm2xy4" sourceRef="Task_0yqqng8" targetRef="Task_0557bvz" />
+    <bpmn:serviceTask id="Task_0557bvz" name="Сохранияем данные по биллингу" camunda:class="org.camunda.bpm.spring.boot.example.simple.delegate.SaverDataBillingDelegate">
+      <bpmn:incoming>SequenceFlow_0tm2xy4</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1gxzg1k</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:callActivity id="Task_0yqqng8" name="Запуск биллинга по клиенту" calledElement="billing-installment">
+      <bpmn:extensionElements>
+        <camunda:in source="clientId" target="id" />
+        <camunda:in source="dataClients" target="data" />
+        <camunda:in source="billingDate" target="billingDate" />
+        <camunda:out source="data" target="dataClients" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_10tjllg</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0tm2xy4</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true" camunda:collection="clients" camunda:elementVariable="clientId" />
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="SequenceFlow_1gxzg1k" sourceRef="Task_0557bvz" targetRef="EndEvent_19l3srs" />
+    <bpmn:endEvent id="EndEvent_19l3srs">
+      <bpmn:incoming>SequenceFlow_1gxzg1k</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="pPackageBillingV2">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1dsef2e_di" bpmnElement="SequenceFlow_1dsef2e">
+        <di:waypoint x="209" y="120" />
+        <di:waypoint x="259" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1ta1b74_di" bpmnElement="Task_14gv2zw">
+        <dc:Bounds x="259" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_10tjllg_di" bpmnElement="SequenceFlow_10tjllg">
+        <di:waypoint x="359" y="120" />
+        <di:waypoint x="409" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0tm2xy4_di" bpmnElement="SequenceFlow_0tm2xy4">
+        <di:waypoint x="509" y="120" />
+        <di:waypoint x="559" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1opu7c7_di" bpmnElement="Task_0557bvz">
+        <dc:Bounds x="559" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_1z0rvxn_di" bpmnElement="Task_0yqqng8">
+        <dc:Bounds x="409" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1gxzg1k_di" bpmnElement="SequenceFlow_1gxzg1k">
+        <di:waypoint x="659" y="120" />
+        <di:waypoint x="702" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_19l3srs_di" bpmnElement="EndEvent_19l3srs">
+        <dc:Bounds x="702" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

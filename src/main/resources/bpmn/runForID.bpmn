@@ -3,7 +3,7 @@
   <bpmn:process id="runForID" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1" camunda:asyncBefore="true" camunda:exclusive="false">
       <bpmn:extensionElements>
-        <camunda:failedJobRetryTimeCycle>1</camunda:failedJobRetryTimeCycle>
+        <camunda:failedJobRetryTimeCycle></camunda:failedJobRetryTimeCycle>
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_0hatudc</bpmn:outgoing>
     </bpmn:startEvent>

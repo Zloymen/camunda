@@ -10,6 +10,7 @@ import org.camunda.bpm.spring.boot.example.simple.dto.TaskDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -70,6 +71,23 @@ public class ExampleController {
 
 
         return processInstance.getCaseInstanceId();
+    }
+
+
+    @GetMapping("/process/counter/{count}/create")
+    public String createProcessCounter(@PathVariable Integer count){
+
+        for(int i = 0; i < count;i++){
+            String uid = UUID.randomUUID().toString();
+
+            Map <String, Object> variables = new HashMap<>();
+            variables.put("count", 1);
+            variables.put("maxCount", 10);
+
+            runtimeService.startProcessInstanceByKey("pCounter", uid, variables);
+        }
+
+        return "done";
     }
 
 }
