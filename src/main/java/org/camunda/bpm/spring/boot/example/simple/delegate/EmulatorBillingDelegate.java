@@ -23,6 +23,7 @@ public class EmulatorBillingDelegate implements JavaDelegate {
             data.put(id, builder.toString());
         }
 
+        Thread.sleep(30000);
         execution.setVariable("data", data);
     }
 }

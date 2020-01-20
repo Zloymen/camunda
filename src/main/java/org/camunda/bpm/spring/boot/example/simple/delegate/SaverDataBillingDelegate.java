@@ -18,5 +18,10 @@ public class SaverDataBillingDelegate implements JavaDelegate, PrintVariables {
         Map<Integer, Object> data = (Map<Integer, Object>) execution.getVariable("dataClients");
 
         printAll(log, data);
+
+
+
+
+        Thread.sleep(30000L);
     }
 }
