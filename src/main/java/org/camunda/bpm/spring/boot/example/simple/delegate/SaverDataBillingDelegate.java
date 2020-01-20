@@ -15,13 +15,13 @@ public class SaverDataBillingDelegate implements JavaDelegate, PrintVariables {
     public void execute(DelegateExecution execution) throws Exception {
         log.info("save Billing");
 
-        Map<Integer, Object> data = (Map<Integer, Object>) execution.getVariable("dataClients");
+        Map<Integer, Object> data = (Map<Integer, Object>) execution.getVariable("resultData");
 
         printAll(log, data);
 
 
 
 
-        Thread.sleep(30000L);
+        //Thread.sleep(30000L);
     }
 }

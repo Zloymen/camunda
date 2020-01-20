@@ -11,7 +11,8 @@ public class EmulatorBillingDelegate implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        Map<Integer, Object> data = (Map<Integer, Object>) execution.getVariable("data");
+        Map<String, Object> data = (Map<String, Object>) execution.getVariable("dataClient");
+        Map<Integer, Object> resultData = (Map<Integer, Object>) execution.getVariable("resultData");
         Integer id = (Integer) execution.getVariable("id");
         Date billingDate = (Date) execution.getVariable("billingDate");
 
@@ -20,10 +21,10 @@ public class EmulatorBillingDelegate implements JavaDelegate {
 
         try(Formatter fmt = new Formatter(builder)){
             fmt.format("id = %d,  billingDate = %s result = %s", id, billingDate.toString(), "расчет совершен");
-            data.put(id, builder.toString());
+            resultData.put(id, builder.toString());
         }
 
-        Thread.sleep(30000);
-        execution.setVariable("data", data);
+        //Thread.sleep(3000);
+        execution.setVariable("resultData", resultData);
     }
 }

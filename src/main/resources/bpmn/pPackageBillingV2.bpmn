@@ -18,9 +18,10 @@
     <bpmn:callActivity id="Task_0yqqng8" name="Запуск биллинга по клиенту" calledElement="billing-installment">
       <bpmn:extensionElements>
         <camunda:in source="clientId" target="id" />
-        <camunda:in source="dataClients" target="data" />
         <camunda:in source="billingDate" target="billingDate" />
-        <camunda:out source="data" target="dataClients" />
+        <camunda:out source="resultData" target="data" />
+        <camunda:in sourceExpression="${dataClients.get(clientId)}" target="dataClient" />
+        <camunda:in sourceExpression="${resultData}" target="resultData" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_10tjllg</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0tm2xy4</bpmn:outgoing>
