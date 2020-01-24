@@ -4,24 +4,29 @@ import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j
 public class GetterBillingDataForClient implements JavaDelegate, PrintVariables {
 
-    private static final Random random = new Random();
-
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         List<Integer> clients = (List<Integer>) execution.getVariable("clients");
+        LocalDate billingDate = (LocalDate) execution.getVariable("billingDate");
 
-        Map<Integer, Object> dataClients = clients.stream().map(GetterBillingDataForClient::generateData)
-                .collect(Collectors.toMap(item -> (Integer) item.get("id"), Function.identity()));
+        log.info("billingDate: {}", billingDate);
+
+        Map<Integer, Map<String, Object>> dataClients = clients.stream()
+                .collect(Collectors.toMap(item -> item, item -> {
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("value","клиент №" + item);
+                    data.put("clientId",item);
+                    return  data;
+                }));
 
         printAll(log, execution.getVariables());
 
@@ -29,19 +34,4 @@ public class GetterBillingDataForClient implements JavaDelegate, PrintVariables 
         execution.setVariable("resultData", new HashMap<Integer, Object>());
     }
 
-    private static Integer generate(){
-        return random.nextInt(100);
-    }
-
-    private static Map<String, Object> generateData(Integer id){
-        Map<String, Object> result = new HashMap<>();
-
-
-        result.put("loans", generate());
-        result.put("payments", generate());
-
-        result.put("id", id);
-
-        return result;
-    }
 }

@@ -22,6 +22,7 @@
         <camunda:inputOutput>
           <camunda:inputParameter name="billingDate">${billingDate}</camunda:inputParameter>
           <camunda:inputParameter name="size">${size}</camunda:inputParameter>
+          <camunda:outputParameter name="billingDate">${billingDate}</camunda:outputParameter>
         </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0myqo6g</bpmn:incoming>

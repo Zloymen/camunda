@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0cgcfr4" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.1">
+  <bpmn:process id="pRunForMap" name="запуск через мапу" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="org.camunda.bpm.spring.boot.example.simple.listener.LoggerExecListener" event="start" />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_1af25wq</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_1nq6rbm">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="org.camunda.bpm.spring.boot.example.simple.listener.LoggerExecListener" event="end" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0ta3yrc</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0ta3yrc" sourceRef="Task_0up21cc" targetRef="EndEvent_1nq6rbm" />
+    <bpmn:serviceTask id="Task_0up21cc" name="run" camunda:class="org.camunda.bpm.spring.boot.example.simple.delegate.PrintDelegate">
+      <bpmn:incoming>SequenceFlow_1hbky25</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0ta3yrc</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true" camunda:collection="${data.get(&#34;list&#34;)}" camunda:elementVariable="value" />
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1af25wq" sourceRef="StartEvent_1" targetRef="Task_1rsrg4a" />
+    <bpmn:sequenceFlow id="SequenceFlow_1hbky25" sourceRef="Task_1rsrg4a" targetRef="Task_0up21cc" />
+    <bpmn:serviceTask id="Task_1rsrg4a" name="generate data" camunda:class="org.camunda.bpm.spring.boot.example.simple.delegate.GenerateDataDelegate">
+      <bpmn:incoming>SequenceFlow_1af25wq</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1hbky25</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="pRunForMap">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="195" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1nq6rbm_di" bpmnElement="EndEvent_1nq6rbm">
+        <dc:Bounds x="636" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ta3yrc_di" bpmnElement="SequenceFlow_0ta3yrc">
+        <di:waypoint x="554" y="120" />
+        <di:waypoint x="636" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0bxk28h_di" bpmnElement="Task_0up21cc">
+        <dc:Bounds x="454" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1af25wq_di" bpmnElement="SequenceFlow_1af25wq">
+        <di:waypoint x="231" y="120" />
+        <di:waypoint x="290" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1hbky25_di" bpmnElement="SequenceFlow_1hbky25">
+        <di:waypoint x="390" y="120" />
+        <di:waypoint x="454" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1u5pc5v_di" bpmnElement="Task_1rsrg4a">
+        <dc:Bounds x="290" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
