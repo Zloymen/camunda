@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0ugkmwa" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.1">
+  <bpmn:process id="test-serialize" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_07n5weu</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_07n5weu" sourceRef="StartEvent_1" targetRef="Task_0zlcgte" />
+    <bpmn:sequenceFlow id="SequenceFlow_1mpm7z0" sourceRef="Task_0zlcgte" targetRef="Task_0lhywm9" />
+    <bpmn:sequenceFlow id="SequenceFlow_1ow8q7s" sourceRef="Task_0lhywm9" targetRef="Task_0khrmd8" />
+    <bpmn:endEvent id="EndEvent_0r5uugt">
+      <bpmn:incoming>SequenceFlow_1ukdtqz</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1ukdtqz" sourceRef="Task_0khrmd8" targetRef="EndEvent_0r5uugt" />
+    <bpmn:serviceTask id="Task_0zlcgte" name="GenerateDataDelegate" camunda:class="org.camunda.bpm.spring.boot.example.simple.delegate.serialized.GenerateDataDelegate">
+      <bpmn:incoming>SequenceFlow_07n5weu</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1mpm7z0</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_0lhywm9" name="run test serialaze process" camunda:class="org.camunda.bpm.spring.boot.example.simple.delegate.serialized.SerialyzeStartProcess">
+      <bpmn:incoming>SequenceFlow_1mpm7z0</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1ow8q7s</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_0khrmd8" name="PrintDelegate" camunda:class="org.camunda.bpm.spring.boot.example.simple.delegate.PrintDelegate">
+      <bpmn:incoming>SequenceFlow_1ow8q7s</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1ukdtqz</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="test-serialize">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_07n5weu_di" bpmnElement="SequenceFlow_07n5weu">
+        <di:waypoint x="209" y="120" />
+        <di:waypoint x="259" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1mpm7z0_di" bpmnElement="SequenceFlow_1mpm7z0">
+        <di:waypoint x="359" y="120" />
+        <di:waypoint x="409" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1ow8q7s_di" bpmnElement="SequenceFlow_1ow8q7s">
+        <di:waypoint x="509" y="120" />
+        <di:waypoint x="559" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0r5uugt_di" bpmnElement="EndEvent_0r5uugt">
+        <dc:Bounds x="709" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1ukdtqz_di" bpmnElement="SequenceFlow_1ukdtqz">
+        <di:waypoint x="659" y="120" />
+        <di:waypoint x="709" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_12q314g_di" bpmnElement="Task_0zlcgte">
+        <dc:Bounds x="259" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_132gbvm_di" bpmnElement="Task_0lhywm9">
+        <dc:Bounds x="409" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_08ojtqp_di" bpmnElement="Task_0khrmd8">
+        <dc:Bounds x="559" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

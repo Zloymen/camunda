@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_11bb774" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.1">
+  <bpmn:process id="pRecallBillingV2" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="startRecalculateDate" type="date" />
+          <camunda:formField id="endRecalculationDate" type="date" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_0cz2rxg</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0cz2rxg" sourceRef="StartEvent_1" targetRef="Task_0daobyv" />
+    <bpmn:sequenceFlow id="SequenceFlow_0cfdbkz" sourceRef="Task_0daobyv" targetRef="Task_1s93xiz" />
+    <bpmn:sequenceFlow id="SequenceFlow_1nm0xnd" sourceRef="Task_1s93xiz" targetRef="Task_1axw4w5" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0xbqfgz" default="SequenceFlow_0w9mds7">
+      <bpmn:incoming>SequenceFlow_14ccwru</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1os769m</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0w9mds7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_1os769m" sourceRef="ExclusiveGateway_0xbqfgz" targetRef="Task_10u6dqh">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${startRecalculateDate.isAfter(endRecalculationDate)}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="EndEvent_1dwr5pi">
+      <bpmn:incoming>SequenceFlow_1po3som</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1po3som" sourceRef="Task_10u6dqh" targetRef="EndEvent_1dwr5pi" />
+    <bpmn:callActivity id="Task_1axw4w5" name="billing-installment for date" calledElement="billing-installment">
+      <bpmn:extensionElements>
+        <camunda:in source="count" target="count" />
+        <camunda:in source="startRecalculateDate" target="billingDate" />
+        <camunda:in source="clientId" target="id" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1nm0xnd</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0w9mds7</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1mq331n</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true" camunda:collection="clients" camunda:elementVariable="clientId" />
+    </bpmn:callActivity>
+    <bpmn:serviceTask id="Task_10u6dqh" name="Сохранение данных" camunda:class="org.camunda.bpm.spring.boot.example.simple.delegate.PrintDelegate">
+      <bpmn:incoming>SequenceFlow_1os769m</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1po3som</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_1s93xiz" name="аннулирование данных" camunda:class="org.camunda.bpm.spring.boot.example.simple.delegate.PrintDelegate">
+      <bpmn:incoming>SequenceFlow_0cfdbkz</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1nm0xnd</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_0daobyv" name="Подготовка данных" camunda:class="org.camunda.bpm.spring.boot.example.simple.delegate.TrainingDataDelegate">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="count">${0}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0cz2rxg</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0cfdbkz</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_1aqwd99" name="counter" camunda:expression="${startRecalculateDate.plusDays(1)}" camunda:resultVariable="startRecalculateDate">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="org.camunda.bpm.spring.boot.example.simple.listener.LoggerExecListener" event="start" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1mq331n</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_14ccwru</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_14ccwru" sourceRef="Task_1aqwd99" targetRef="ExclusiveGateway_0xbqfgz" />
+    <bpmn:sequenceFlow id="SequenceFlow_1mq331n" sourceRef="Task_1axw4w5" targetRef="Task_1aqwd99" />
+    <bpmn:sequenceFlow id="SequenceFlow_0w9mds7" sourceRef="ExclusiveGateway_0xbqfgz" targetRef="Task_1axw4w5" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="pRecallBillingV2">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0cz2rxg_di" bpmnElement="SequenceFlow_0cz2rxg">
+        <di:waypoint x="209" y="120" />
+        <di:waypoint x="259" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0cfdbkz_di" bpmnElement="SequenceFlow_0cfdbkz">
+        <di:waypoint x="359" y="120" />
+        <di:waypoint x="409" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1nm0xnd_di" bpmnElement="SequenceFlow_1nm0xnd">
+        <di:waypoint x="509" y="120" />
+        <di:waypoint x="559" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0xbqfgz_di" bpmnElement="ExclusiveGateway_0xbqfgz" isMarkerVisible="true">
+        <dc:Bounds x="801" y="220" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1os769m_di" bpmnElement="SequenceFlow_1os769m">
+        <di:waypoint x="851" y="245" />
+        <di:waypoint x="984" y="245" />
+        <di:waypoint x="984" y="107" />
+        <di:waypoint x="1031" y="107" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_1dwr5pi_di" bpmnElement="EndEvent_1dwr5pi">
+        <dc:Bounds x="1258" y="144" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1po3som_di" bpmnElement="SequenceFlow_1po3som">
+        <di:waypoint x="1131" y="107" />
+        <di:waypoint x="1195" y="107" />
+        <di:waypoint x="1195" y="162" />
+        <di:waypoint x="1258" y="162" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="CallActivity_0u8lujo_di" bpmnElement="Task_1axw4w5">
+        <dc:Bounds x="559" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_141q6pn_di" bpmnElement="Task_10u6dqh">
+        <dc:Bounds x="1031" y="67" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0nplgfn_di" bpmnElement="Task_1s93xiz">
+        <dc:Bounds x="409" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0dva99e_di" bpmnElement="Task_0daobyv">
+        <dc:Bounds x="259" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0591n5o_di" bpmnElement="Task_1aqwd99">
+        <dc:Bounds x="776" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_14ccwru_di" bpmnElement="SequenceFlow_14ccwru">
+        <di:waypoint x="826" y="160" />
+        <di:waypoint x="826" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1mq331n_di" bpmnElement="SequenceFlow_1mq331n">
+        <di:waypoint x="659" y="120" />
+        <di:waypoint x="776" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0w9mds7_di" bpmnElement="SequenceFlow_0w9mds7">
+        <di:waypoint x="801" y="245" />
+        <di:waypoint x="609" y="245" />
+        <di:waypoint x="609" y="160" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
