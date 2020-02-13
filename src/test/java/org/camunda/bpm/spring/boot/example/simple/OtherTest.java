@@ -84,8 +84,6 @@ public class OtherTest {
         } catch (NestedRuntimeException e) {
             throw new RuntimeException("Сетевая ошибка в test", e);
         }
-
-
     }
 
     @Data
